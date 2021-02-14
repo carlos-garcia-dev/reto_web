@@ -5,10 +5,12 @@ const faker = require('faker')
 
 
 const Phone = require('./../models/phone.model')
+const User = require ('./../models/user.model')
 
 
 mongoose.connect(`mongodb://localhost/call-app`, { useNewUrlParser: true, useUnifiedTopology: true })
 Phone.collection.drop()
+User.collection.drop()
 
 
 const phoneList = [
@@ -106,7 +108,32 @@ const phoneList = [
 Phone
     .create(phoneList)
     .then(allPhonesCreated => {
-        console.log(`CREATING PHONES: ${phoneList.length + 1}`)
-            mongoose.connection.close()
-    })
+        console.log(`CREATING PHONES: ${phoneList.length + 1}`)})
     .catch(err => console.log(err))
+
+
+
+
+const userTag = ['User', 'Brand', 'Admin']    
+const associatedPhones = []
+
+
+User
+    .create()
+    .then(fillUsers => {
+        for (let i = 0; i < 50; i++) {
+            console.log(`CREATING USERS: ${i + 1}`)
+            associatedPhones.push({
+                name: faker.firstName(),
+                lastName: faker.lastName(),
+                username: faker.internet.userName(),
+                email: faker.internet.email(),
+                password: bcrypt.hashSync(faker.internet.password(), salt),
+                userType: userTag[Math.round(Math.random() * (everyTag.length - 1))],
+            })
+        }
+        return User.create(associatedPhones)
+    })
+    .then(() => mongoose.connection.close())
+    .catch(err => console.log(err))
+    
