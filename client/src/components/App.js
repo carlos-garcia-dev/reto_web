@@ -5,29 +5,30 @@ import './App.css';
 
 
 
+
+
+
 import ServiceAuth from '../service/auth.service'
 
 
 
 export default class App extends Component {
-    constructor() {
-      super()
-        this.state = { signnedUser: undefined }
-        this.serviceAuth = new ServiceAuth()
-    }
-
-  
-    componentDidMount = () => {
-      this.serviceAuth
-          .signnedIn()
-          .then(response => this.setStateUser(response.data))
-          .catch(err => this.setStateUser(undefined))
-    }
-
-  
-    setStateUser = user => this.setState({ signnedUser: user }, () => console.log('CURRENT APP STATE:', this.state))
     
+    constructor() {
+        super()
+            this.state = { signnedUser: undefined }
+            this.serviceAuth = new ServiceAuth()
+    }
+
+    componentDidMount = () => {
+        this.serviceAuth
+            .signnedIn()
+            .then(response => this.setStateUser(response.data))
+            .catch(err => this.setStateUser(undefined))
+    }
+
   
+    setStateUser = user => this.setState({ signnedUser: user }, () => console.log('CURRENT APP STATE:', this.state))  
   
   
   render() {
@@ -37,6 +38,7 @@ export default class App extends Component {
         
             <main>
                 <Switch>
+                    {/* <Route path="/" exact render={() => <PublicationMain currentUser={this.state.signnedUser} />} /> */}
               
                 </Switch>
             </main>
