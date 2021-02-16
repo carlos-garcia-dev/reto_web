@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css';
 
+import './App.css'
 
-
+import Main from '../components/pages/main/Main'
 
 
 
@@ -38,8 +38,7 @@ export default class App extends Component {
         
             <main>
                 <Switch>
-                    {/* <Route path="/" exact render={() => <PublicationMain currentUser={this.state.signnedUser} />} /> */}
-              
+                    <Route path="/" exact render={() => <Main currentUser={this.state.signnedUser} />} />
                 </Switch>
             </main>
         </>
