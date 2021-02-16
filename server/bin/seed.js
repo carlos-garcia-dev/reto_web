@@ -124,12 +124,12 @@ User
         for (let i = 0; i < 50; i++) {
             console.log(`CREATING USERS: ${i + 1}`)
             associatedPhones.push({
-                name: faker.firstName(),
-                lastName: faker.lastName(),
+                name: faker.name.firstName(),
+                lastName: faker.name.lastName(),
                 username: faker.internet.userName(),
                 email: faker.internet.email(),
                 password: bcrypt.hashSync(faker.internet.password(), salt),
-                userType: userTag[Math.round(Math.random() * (everyTag.length - 1))],
+                userType: userTag[Math.round(Math.random() * (userTag.length - 1))],
             })
         }
         return User.create(associatedPhones)
