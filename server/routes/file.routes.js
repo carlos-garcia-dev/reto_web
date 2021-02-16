@@ -1,28 +1,28 @@
-const cloudinary = require('cloudinary').v2
-const { CloudinaryStorage } = require('multer-storage-cloudinary')
-const multer = require('multer')
+const express = require('express')
+const router = express.Router()
+const uploader = require('../configs/cloudinary.config') 
 
-
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET,
-})
-
-
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: 'call-app',
-        format: async (req, file) => 'png',  //'jpeg', 'jfif', 'jpg', 'jpeg2000', 'gif' 
+router.post('/upload', uploader.single('imageUrl'), (req, res) => {
+   
+    if (!req.file) {
+        res.status(500).json({ message: 'Error uploading the file' })
+        return
     }
+    
+    res.json({ secure_url: req.file.path })
+
 })
 
 
-const uploadCloud = multer({ storage: storage })
+router.post('/avatar', uploader.single('avatar'), (req, res) => {
+   
+    if (!req.file) {
+        res.status(500).json({ message: 'Error uploading the file' })
+        return
+    }
 
+    res.json({ secure_url: req.file.path })
 
-module.exports = uploadCloud
+})
 
-
-
+module.exports = router
